@@ -23,7 +23,7 @@ The models used for this project are of the Google T5 family, but of different s
 Clone this repository and navigate to the project directory via the GitHub CLI command shown below:
 
 ```bash
-gh repo clone Loganpd/chata-assignment
+gh repo clone Loganpd/pedram-darestani-disfluency-correction
 ```
 
 Then you can install the project dependencies provided in the requirements.txt file.
