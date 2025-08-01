@@ -171,3 +171,32 @@ def mini_batch_inference(input_texts, model, tokenizer, batch_size, device):
                                               skip_special_tokens=True)
         torch.cuda.empty_cache()
     return outputs
+
+def load_test_data(file_path):
+    """
+    Loads the proprietary test data that you would like to provide
+    :param file_path: The path to the proprietary test data.
+    """
+    with open(file_path, 'r') as file:
+        data =  json.load(file)
+    inputs = [data[key]['disfluent'] for key in data.keys()]
+    targets = [data[key]['original'] for key in data.keys()]
+    return Dataset.from_dict({'inputs': inputs, 'targets': targets})
+
+def proprietary_evaluation(file_path, model_name, batch_size=128):
+    """
+    Evaluates a fine-tuned model against the proprietary test data.
+    :param file_path: The path to the proprietary test data.
+    :param model_name: The name of the model. Can be one of t5-small, t5-base, or t5-large.
+    :param batch_size: The batch size for inference. Useful if the data is large and cannot fit into memory.
+    """
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    data= load_test_data(file_path)
+    tokenizer, model = load_model(model_name, device)
+    model.eval()
+
+    test_outputs = mini_batch_inference(data['inputs'], model, tokenizer, batch_size, device)
+    final_metrics = evaluate_outputs(test_outputs, data['targets'])
+    print(f"Evaluation metrics of the fine tuned {model_name} model on the test set:")
+    print(final_metrics)
+    return tokenizer, model

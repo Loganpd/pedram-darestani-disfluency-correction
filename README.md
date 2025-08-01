@@ -36,7 +36,6 @@ Then you can install the project dependencies provided in the requirements.txt f
 - The training error vs step plots are also available inside model directories.
 
 
-
 ## Evaluation
 The metrics used for evaluation of the fine-tuned models on speech correction are shown below.
 Also,in order to evaluate the semantic similarity of the model outputs with their intended values, a cosine 
@@ -73,4 +72,10 @@ Finally, the performance of this model is evaluated on the test set and is shown
 Note that due to hardware limitations, the training of the T5-large model was stopped before it is adequately 
 trained. Thus, it is possible that this model would out-perform the two other models given the right number of
 training epochs.
+
+## Proprietary dataset evaluation
+- In order to perform your proprietary dataset evaluation, you can use the test.ipynb file.
+- Simply provide the path to your dataset JSON file and the model you would like to evaluate (one of t5-small, t5-base, or t5-large model names), and run the cells.
+- You will be provided with the list of metrics evaluating the performance of the model on the given JSON file.
+- You can also get the output of the model for any singular prompt, by entering your prompt and running the generate_one function.
 
